@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kee.ad.dao.OrderDetailDao">
+
+  <select id="listOrderDetails" parameterType="com.kee.ad.model.OrderDetailQueryBean" resultType="com.kee.ad.model.OrderDetail">
+    SELECT
+      *
+    FROM t_order_detail todetail
+    <include refid="condition_where"/>
+  </select>
+
+  <select id="countOrderDetails" parameterType="com.kee.ad.model.OrderDetailQueryBean" resultType="int">
+    SELECT
+      count(1)
+    FROM t_order_detail todetail
+    <include refid="condition_where"/>
+  </select>
+
+
+  <sql id="condition_where">
+    <where>
+      <if test="startDate != null">
+        DATE(todetail.create_time) <![CDATA[>=]]> DATE(#{startDate,jdbcType=TIMESTAMP})
+      </if>
+      <if test="endDate != null">
+        AND DATE(todetail.create_time) <![CDATA[<]]> DATE(#{endDate,jdbcType=TIMESTAMP})
+      </if>
+      <if test="subject != null">
+        AND todetail.subject LIKE CONCAT('%',#{subject},'%')
+      </if>
+      <if test="isActivity != null">
+        AND todetail.is_activity = #{isActivity}
+      </if>
+    </where>
+  </sql>
+
+</mapper>

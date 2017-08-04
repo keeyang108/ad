@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!--<properties resource="" url=""/>-->
+    <context id="adtables">
+        <property name="javaFileEncoding" value="UTF-8"/>
+
+        <plugin type="org.mybatis.generator.plugins.EqualsHashCodePlugin"></plugin>
+        <plugin type="org.mybatis.generator.plugins.SerializablePlugin"></plugin>
+        <plugin type="org.mybatis.generator.plugins.ToStringPlugin"></plugin>
+        <!--<plugin type="com.kee.ad.plugin.SwaggerApiModelPlugin"></plugin>-->
+
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://127.0.0.1:9527/ad?characterEncoding=UTF-8" userId="root"
+                        password="garfield.,"/>
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <javaModelGenerator targetPackage="com.kee.ad.model" targetProject="MAVEN">
+            <property name="trimString" value="true"/>
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="com.kee.ad.mapping" targetProject="MAVEN">
+            <property name="overwrite" value="true"/>
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.kee.ad.dao" targetProject="MAVEN"/>
+
+        <table tableName="t_order_detail" domainObjectName="OrderDetail" mapperName="OrderDetailMapper">
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>
+
+        <table tableName="t_subject" domainObjectName="Subject" mapperName="SubjectMapper">
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>
+
+        <table tableName="t_supervisor" domainObjectName="Supervisor" mapperName="SupervisorMapper">
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>
+
+        <table tableName="t_dealer" domainObjectName="Dealer" mapperName="DealerMapper">
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>
+
+        <table tableName="dt_area" domainObjectName="Area" mapperName="AreaMapper">
+            <generatedKey column="id" sqlStatement="JDBC"/>
+        </table>
+    </context>
+</generatorConfiguration>
