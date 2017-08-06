@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  * 登录拦截器
  * Created by Administrator on 2016/11/15.
  */
+@Service
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
     @Autowired

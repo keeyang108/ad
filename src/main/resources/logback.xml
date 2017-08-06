@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scanPeriod="6" debug="false">
     <property name="LOG_HOME" value="${catalina.base}/logs/"/>
