@@ -35,7 +35,6 @@ public class OrderDetailServiceImpl implements OrderDetailService {
 
     @Override
     public int countOrderDetails(OrderDetailQueryBean queryBean) {
-        Map<String, Object> result = orderDetailDao.countOrderDetails(queryBean);
-        return Integer.parseInt(result.get("totalCount").toString());
+        return orderDetailDao.countOrderDetails(queryBean);
     }
 }

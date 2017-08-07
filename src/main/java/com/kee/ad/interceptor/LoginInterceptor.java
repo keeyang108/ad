@@ -9,6 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -19,6 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  * 登录拦截器
  * Created by Administrator on 2016/11/15.
  */
+@Service
 public class LoginInterceptor extends HandlerInterceptorAdapter {
 
     @Autowired
@@ -46,7 +48,11 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         logger.info("url:{}", url);
         String token = JwtUtils.getTokenFromRequest(httpServletRequest, this.tokenHeader);
         String uri = httpServletRequest.getRequestURI();
-        if ((!LOGIN_URI.equals(uri) && !ADDORDER_URI.equals(uri) && !SWAGGER_URI.equals(uri)) && StringUtils.isNotBlank(token)) {
+        if ((!LOGIN_URI.equals(uri) && !ADDORDER_URI.equals(uri) && !SWAGGER_URI.equals(uri))) {
+            if (StringUtils.isBlank(token)){
+                httpServletResponse.getWriter().write(JsonUtils.toJson("请先登陆"));
+                return false;
+            }
             //取出userName,查找数据库是否存在，然后重新生成token，看是否一致,如果一致则可以认为已经登陆
             String userName = jwtTokenUtil.getUsernameFromToken(token);
             if (null == userName) {

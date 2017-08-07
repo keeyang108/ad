@@ -19,8 +19,8 @@ public interface OrderDetailDao extends OrderDetailMapper {
      * @param queryBean
      * @return
      */
-    List<OrderDetail> listOrderDetails(@Param("queryBean") OrderDetailQueryBean queryBean) throws DataAccessException;
+    List<OrderDetail> listOrderDetails(OrderDetailQueryBean queryBean) throws DataAccessException;
 
-    Map<String, Object> countOrderDetails(@Param("queryBean") OrderDetailQueryBean queryBean);
+    int countOrderDetails(OrderDetailQueryBean queryBean);
 
 }

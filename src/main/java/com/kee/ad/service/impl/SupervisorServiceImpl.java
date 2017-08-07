@@ -23,7 +23,7 @@ public class SupervisorServiceImpl implements SupervisorService {
     private SupervisorDao supervisorDao;
 
     public int addSupervisor(Supervisor supervisor) {
-        return supervisorDao.insert(supervisor);
+        return supervisorDao.insertSelective(supervisor);
     }
 
     public Supervisor checkUser(Supervisor supervisor) {

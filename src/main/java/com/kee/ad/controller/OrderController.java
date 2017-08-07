@@ -149,14 +149,16 @@ public class OrderController {
         return new JSONPObject(callback, new BaseResult<Object>(true, "success"));
     }
 
-    @GetMapping("/list")
+    @PostMapping("/list")
     public BaseResult<PageBean<OrderDetail>> listOrder(OrderDetailQueryBean queryBean) {
         List<OrderDetail> details = null;
         int totalCount;
         PageBean<OrderDetail> pageBean = new PageBean<OrderDetail>(queryBean);
         try {
-            details = orderDetailService.listOrderDetails(queryBean);
             totalCount = orderDetailService.countOrderDetails(queryBean);
+            if (totalCount > 0){
+                details = orderDetailService.listOrderDetails(queryBean);
+            }
         } catch (DataAccessException e) {
             logger.error("***************获取预约订单失败，错误信息{}", e.getCause().getMessage());
             return ResponseBuilder.error( "内部错误，请联系管理员");

@@ -34,10 +34,10 @@ public class SupervisorController {
     @Autowired
     private SupervisorService supervisorService;
 
+    @Autowired
     private JwtTokenManagement jwtTokenUtils;
 
-    @RequestMapping(value = "/add", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
-    @ResponseBody
+    @PostMapping("/add")
     public BaseResult<String> addSupervisor(@RequestBody Supervisor supervisor) throws IOException {
 
         if (StringUtils.isEmpty(supervisor.getSupervisorName())) {
@@ -61,23 +61,19 @@ public class SupervisorController {
             @ApiImplicitParam(name = "userName", value = "用户名", dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "password", value = "密码", dataType = "string", paramType = "query")
     })
-    @RequestMapping(value = "/login", method = RequestMethod.POST, produces = {"application/json;charset=utf-8"})
-    @ResponseBody
-    public BaseResult<Object> login(String userName, String password, HttpServletRequest request, HttpServletResponse response) {
-        if (StringUtils.isEmpty(userName)) {
+    @PostMapping("/login")
+    public BaseResult<Object> login(@RequestBody Supervisor supervisor, HttpServletRequest request, HttpServletResponse response) {
+        if (StringUtils.isEmpty(supervisor.getSupervisorName())) {
             return new BaseResult<Object>(false, "请输入用户名");
         }
-        if (StringUtils.isEmpty(password)) {
+        if (StringUtils.isEmpty(supervisor.getPassword())) {
             return new BaseResult<Object>(false, "请输入密码");
         }
-        Supervisor supervisor = new Supervisor();
-        supervisor.setSupervisorName(userName);
-        supervisor.setPassword(password);
         Supervisor result = supervisorService.checkUser(supervisor);
         if (result == null) {
             return new BaseResult<Object>(false, "用户名或密码错误");
         }
-        String token = jwtTokenUtils.generateToken(supervisor);
+        String token = jwtTokenUtils.generateToken(result);
         JwtUtils.setCookie(request, response, token);
         return new BaseResult<Object>(true, "success");
     }
