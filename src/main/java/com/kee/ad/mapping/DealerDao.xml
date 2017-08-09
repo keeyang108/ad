@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kee.ad.dao.DealerDao">
+
+  <select id="selectByCondition" parameterType="com.kee.ad.model.DealerQueryBean" resultType="com.kee.ad.model.Dealer">
+    SELECT
+      *
+    FROM t_dealer tdealer
+    <include refid="condition_where"/>
+  </select>
+
+  <select id="countByCondition">
+    SELECT
+      COUNT(1)
+    FROM t_dealer tdealer
+    <include refid="condition_where"/>
+  </select>
+  
+  
+  <select id="selectDistinceProvince" resultType="java.lang.String">
+    SELECT DISTINCT province_name from t_dealer tdealer;
+  </select>
+
+  <select id="selectCityByProvince" resultType="java.lang.String">
+    SELECT DISTINCT city_name from t_dealer tdealer where tdealer.province_name=#{provinceName};
+  </select>
+
+  <select id="selectShopByCity" resultType="com.kee.ad.pojo.Shop">
+    SELECT
+      agency_name as name,
+      agency_name as code,
+      agency_address as address,
+      connect_tel as tel
+    FROM  t_dealer tdealer
+    WHERE city_name=#{cityName};
+  </select>
+
+  <sql id="condition_where">
+    <where>
+      <if test="agencyName != null">
+        AND tdealer.agency_name LIKE CONCAT('%',#{agencyName},'%')
+      </if>
+      <if test="provinceName != null">
+        AND tdealer.province_name = #{provinceName}
+      </if>
+      <if test="cityName != null">
+        AND tdealer.city_name LIKE CONCAT('%', #{cityName},'%')
+      </if>
+    </where>
+  </sql>
+
+</mapper>

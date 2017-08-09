@@ -3,8 +3,10 @@ package com.kee.ad.util;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.annotation.*;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.util.List;
 
 /**
  * Created by Kee on 2017/6/13.
@@ -67,3 +69,4 @@ public class JAXBUtil {
         return t;
     }
 }
+
