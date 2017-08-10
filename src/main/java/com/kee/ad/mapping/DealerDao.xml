@@ -7,9 +7,10 @@
       *
     FROM t_dealer tdealer
     <include refid="condition_where"/>
+    limit #{startIndex},#{pageSize}
   </select>
 
-  <select id="countByCondition">
+  <select id="countByCondition" resultType="int">
     SELECT
       COUNT(1)
     FROM t_dealer tdealer

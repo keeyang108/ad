@@ -2,6 +2,7 @@ package com.kee.ad.service.impl;
 
 import com.kee.ad.dao.DealerDao;
 import com.kee.ad.model.Dealer;
+import com.kee.ad.model.DealerExample;
 import com.kee.ad.model.DealerQueryBean;
 import com.kee.ad.pojo.*;
 import com.kee.ad.service.DealerService;
@@ -91,4 +92,17 @@ public class DealerServiceImpl implements DealerService {
         log.info("xml = {}",xml);
     }
 
+    @Override
+    public void addDealerFromExcel(List<List<String>> lists) {
+        dealerDao.deleteByExample(new DealerExample());
+        for (List<String> list : lists){
+            Dealer dealer = new Dealer();
+            dealer.setProvinceName(list.get(0));
+            dealer.setCityName(list.get(1));
+            dealer.setAgencyName(list.get(2));
+            dealer.setConnectTel(list.get(3));
+            dealer.setAgencyAddress(list.get(4));
+            dealerDao.insertSelective(dealer);
+        }
+    }
 }

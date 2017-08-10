@@ -30,7 +30,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
     private SupervisorService supervisorService;
 
     private Logger logger = LoggerFactory.getLogger(LoginInterceptor.class);
-    protected static final String LOGIN_URI = "/supervisor/logining";
+    protected static final String LOGIN_URI = "/supervisor/login";
     protected static final String ADDORDER_URI = "/front/order/append";
     protected static final String SWAGGER_URI = "/swagger-ui.html";
 

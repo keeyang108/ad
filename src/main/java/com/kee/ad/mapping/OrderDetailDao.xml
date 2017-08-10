@@ -7,6 +7,7 @@
       *
     FROM t_order_detail todetail
     <include refid="condition_where"/>
+    limit #{startIndex},#{pageSize}
   </select>
 
   <select id="countOrderDetails" parameterType="com.kee.ad.model.OrderDetailQueryBean" resultType="int">

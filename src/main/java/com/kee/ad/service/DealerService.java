@@ -6,6 +6,7 @@ import com.kee.ad.pojo.PageBean;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * @author KeeYang on 2017/8/8.
@@ -45,4 +46,9 @@ public interface DealerService {
      * convert to xml file
      */
     void convertToXml() throws IOException;
+
+    /**
+     * add dealer from excel;
+     */
+    void addDealerFromExcel(List<List<String>> list);
 }

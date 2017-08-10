@@ -43,7 +43,7 @@ public class SubjectController {
     }
 
 
-    @GetMapping("/list")
+    @PostMapping("/list")
     public BaseResult<List<Subject>> listSubject(SubjectQueryBean queryBean) {
         return ResponseBuilder.success(subjectService.listSubject(queryBean));
     }

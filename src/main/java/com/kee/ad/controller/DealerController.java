@@ -6,12 +6,19 @@ import com.kee.ad.model.DealerQueryBean;
 import com.kee.ad.model.ResponseBuilder;
 import com.kee.ad.pojo.PageBean;
 import com.kee.ad.service.DealerService;
-import com.kee.ad.util.JAXBUtil;
+import com.kee.ad.util.ExcelUtil;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.aspectj.apache.bcel.generic.MULTIANEWARRAY;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author KeeYang on 2017/8/8.
@@ -78,7 +85,29 @@ public class DealerController {
     }
 
     @PostMapping("/upload")
-    public BaseResult<String> upload(){
+    public BaseResult<String> upload(MultipartHttpServletRequest multiRequest, HttpServletRequest httpServletRequest) throws Exception {
+
+        Iterator<String> iter = multiRequest.getFileNames();
+        while (iter.hasNext()){
+            String fileName = iter.next();
+            List<MultipartFile> files =  multiRequest.getFiles(fileName);
+            boolean isExcel2003 = false;
+            for (MultipartFile file : files){
+                if (null != file && file.getSize() > 0){
+                    String fileExt = FilenameUtils.getExtension(file.getOriginalFilename());
+                    if (!fileExt.equals("xls") && !fileExt.equals("xlsx")){
+                        throw new Exception("请上传Excel文档");
+                    }
+                    if (fileExt.equals("xls")){
+                        isExcel2003 = true;
+                    }
+                    List<List<String>> result = ExcelUtil.readExcel(file.getInputStream(),isExcel2003);
+                    if (null != result && result.size()>0){
+                        dealerService.addDealerFromExcel(result);
+                    }
+                }
+            }
+        }
         return ResponseBuilder.success("success");
     }
 

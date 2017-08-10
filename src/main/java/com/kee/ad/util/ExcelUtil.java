@@ -2,10 +2,15 @@ package com.kee.ad.util;
 
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.hssf.util.HSSFColor;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +19,8 @@ import java.util.Map;
  * Created by Kee on 2016/10/31.
  */
 public class ExcelUtil {
+
+    private final static Logger logger = LoggerFactory.getLogger(ExcelUtil.class);
 
     public static HSSFWorkbook createExcel(String sheetName, String[] titles, String[] keys, List<Map<String, Object>> data) throws IOException {
         HSSFWorkbook workbook = new HSSFWorkbook();
@@ -67,5 +74,70 @@ public class ExcelUtil {
             }
         }
         return workbook;
+    }
+
+
+    public static List<List<String>> readExcel(InputStream inputStream, boolean isExcel2003) {
+        List<List<String>> result = new ArrayList<>();
+        Workbook workbook = null;
+        try {
+            if (isExcel2003) {
+                workbook = new HSSFWorkbook(inputStream);
+            } else {
+                workbook = new XSSFWorkbook(inputStream);
+            }
+            //get first sheet;
+            Sheet sheet = workbook.getSheetAt(0);
+            //get totalRows ;
+            int totalRows = sheet.getPhysicalNumberOfRows();
+            int totalCells =0 ;
+            if (totalRows >=1 && sheet.getRow(0) !=null){
+                totalCells = sheet.getRow(0).getPhysicalNumberOfCells();
+            }
+            DecimalFormat df = new DecimalFormat("#");
+            for (int i = 1 ; i < totalRows;i++){
+                Row row = sheet.getRow(i);
+                if (null == row){
+                    continue;
+                }
+                List<String> rowList = new ArrayList<>();
+                for (int j = 0; j < totalCells;j++){
+                    Cell cell = row.getCell(j);
+                    if (null == cell){
+                        continue;
+                    }
+                    String cellValue = "";
+                    switch (cell.getCellType()){
+                        case HSSFCell.CELL_TYPE_NUMERIC:
+                            cellValue = df.format(cell.getNumericCellValue());
+                            break;
+                        case HSSFCell.CELL_TYPE_STRING:
+                            cellValue = cell.getStringCellValue();
+                            break;
+                        case HSSFCell.CELL_TYPE_BOOLEAN:
+                            cellValue = cell.getBooleanCellValue()+"";
+                            break;
+                        case HSSFCell.CELL_TYPE_FORMULA:
+                            cellValue = cell.getCellFormula();
+                            break;
+                        case HSSFCell.CELL_TYPE_BLANK:
+                            cellValue = "";
+                            break;
+                        case HSSFCell.CELL_TYPE_ERROR:
+                            cellValue = "非法字符";
+                            break;
+                        default:
+                            cellValue = "未知类型";
+                            break;
+                    }
+                    rowList.add(cellValue);
+                }
+                result.add(rowList);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            logger.error("*********Occur Exception when readExcel,{}",e);
+        }
+        return result;
     }
 }
