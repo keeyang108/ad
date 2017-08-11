@@ -40,6 +40,7 @@
 
         <table tableName="t_supervisor" domainObjectName="Supervisor" mapperName="SupervisorMapper">
             <generatedKey column="id" sqlStatement="JDBC"/>
+            <columnOverride column="password" jdbcType="VARCHAR" typeHandler="EncryptTypeHandler"/>
         </table>
 
         <table tableName="t_dealer" domainObjectName="Dealer" mapperName="DealerMapper">

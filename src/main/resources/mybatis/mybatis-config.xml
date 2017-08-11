@@ -9,4 +9,8 @@
         <setting name="mapUnderscoreToCamelCase" value="true"/>
         <setting name="logImpl" value="STDOUT_LOGGING" />
     </settings>
+
+    <typeAliases>
+     <typeAlias type="com.kee.ad.util.EncryptTypeHandler" alias="EncryptTypeHandler"/>
+    </typeAliases>
 </configuration>
