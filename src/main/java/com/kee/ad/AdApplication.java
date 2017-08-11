@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ImportResource;
 
 
-@EnableAutoConfiguration
 @SpringBootApplication(scanBasePackages = {"com.kee.ad"})
 @ImportResource(locations = "classpath*:/spring/application-dao.xml")
 public class AdApplication {

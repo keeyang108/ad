@@ -37,6 +37,7 @@ public class SupervisorController {
     @Autowired
     private JwtTokenManagement jwtTokenUtils;
 
+    @ApiOperation("新增管理员")
     @PostMapping("/add")
     public BaseResult<String> addSupervisor(@RequestBody Supervisor supervisor) throws IOException {
 

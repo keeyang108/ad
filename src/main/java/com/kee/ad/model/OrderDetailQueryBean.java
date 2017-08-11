@@ -1,18 +1,26 @@
 package com.kee.ad.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.util.Date;
 
 /**
  * Created by Kee on 2017/3/27.
  */
+@ApiModel("预约信息查询bean")
 public class OrderDetailQueryBean extends BaseQueryBean {
 
+    @ApiModelProperty("专题名称")
     private String subject;
 
+    @ApiModelProperty("开始时间")
     private Date startDate;
 
+    @ApiModelProperty("结束时间")
     private Date endDate;
 
+    @ApiModelProperty("是否活动专题")
     private boolean isActivity;
 
     public boolean getIsActivity() {

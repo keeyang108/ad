@@ -1,9 +1,10 @@
 package com.kee.ad.config;
 
-import com.kee.ad.interceptor.LoginInterceptor;
+//import com.kee.ad.interceptor.LoginInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
@@ -24,10 +25,11 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
     private final static Logger log = LoggerFactory.getLogger(WebMvcConfig.class);
 
+    @Value("${useSwagger}")
     protected boolean useSwagger;
-
-    @Autowired
-    private LoginInterceptor loginInterceptor;
+//
+//    @Autowired
+//    private LoginInterceptor loginInterceptor;
 
 
     @Override
@@ -39,8 +41,8 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         }
     }
 
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(loginInterceptor);
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry) {
+//        registry.addInterceptor(loginInterceptor);
+//    }
 }

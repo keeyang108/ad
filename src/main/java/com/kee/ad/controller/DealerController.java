@@ -7,9 +7,12 @@ import com.kee.ad.model.ResponseBuilder;
 import com.kee.ad.pojo.PageBean;
 import com.kee.ad.service.DealerService;
 import com.kee.ad.util.ExcelUtil;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.aspectj.apache.bcel.generic.MULTIANEWARRAY;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,6 +27,7 @@ import java.util.List;
  * @author KeeYang on 2017/8/8.
  * @Description :
  */
+@Api(value = "经销商管理",description = "经销商管理",tags = {"经销商管理"})
 @RestController
 @RequestMapping("/dealer")
 public class DealerController {
@@ -31,6 +35,7 @@ public class DealerController {
     @Autowired
     private DealerService dealerService;
 
+    @ApiOperation("添加经销商")
     @PostMapping("/add")
     public BaseResult<Integer> addDealer(@RequestBody Dealer dealer){
         //validate necessary factor
@@ -57,6 +62,7 @@ public class DealerController {
         return ResponseBuilder.success(dealerService.addDealer(dealer));
     }
 
+    @ApiOperation("更新经销商")
     @PutMapping("/update")
     public BaseResult<Integer> udpateDealer(@RequestBody Dealer dealer){
         if (null == dealer.getId() ||dealer.getId() < 1){
@@ -65,6 +71,10 @@ public class DealerController {
         return ResponseBuilder.success(dealerService.updateDealer(dealer));
     }
 
+    @ApiOperation("删除经销商")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "经销商id", required = true, dataType = "int", paramType = "query")
+    })
     @DeleteMapping("/del")
     public BaseResult<Integer> deleteDealer(Integer id){
         if (null == id || id < 1){
@@ -73,17 +83,20 @@ public class DealerController {
         return ResponseBuilder.success(dealerService.deleteDealer(id));
     }
 
+    @ApiOperation("经销商列表")
     @PostMapping("/list")
     public BaseResult<PageBean<Dealer>> listDealer(DealerQueryBean queryBean){
         return ResponseBuilder.success(dealerService.listDealer(queryBean));
     }
 
+    @ApiOperation("转成xml格式")
     @RequestMapping("/toxml")
     public BaseResult<String> convertToXml() throws IOException {
         dealerService.convertToXml();
         return ResponseBuilder.success("success");
     }
 
+    @ApiOperation("excel上传经销商")
     @PostMapping("/upload")
     public BaseResult<String> upload(MultipartHttpServletRequest multiRequest, HttpServletRequest httpServletRequest) throws Exception {
 

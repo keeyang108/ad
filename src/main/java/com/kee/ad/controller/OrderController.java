@@ -8,6 +8,7 @@ import com.kee.ad.model.ResponseBuilder;
 import com.kee.ad.pojo.PageBean;
 import com.kee.ad.service.OrderDetailService;
 import com.kee.ad.util.ExcelUtil;
+import io.swagger.annotations.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ import java.util.Map;
 /**
  * Created by Kee on 2016/10/23.
  */
+@Api(value = "预约信息管理",description = "预约信息管理",tags = {"预约信息管理"})
 @RestController
 @RequestMapping("/front/order")
 public class OrderController {
@@ -38,7 +40,10 @@ public class OrderController {
     @Autowired
     private OrderDetailService orderDetailService;
 
-    @ResponseBody
+    @ApiOperation("跨域新增预订信息")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "callback",value ="回调函数名称" ,dataType = "int",paramType = "query")
+    })
     @GetMapping("/append")
     public JSONPObject addOrderByJSONP(String callback, HttpServletRequest request) throws UnsupportedEncodingException {
         JSONPObject json = null;
@@ -149,6 +154,7 @@ public class OrderController {
         return new JSONPObject(callback, new BaseResult<Object>(true, "success"));
     }
 
+    @ApiOperation("预订信息列表")
     @PostMapping("/list")
     public BaseResult<PageBean<OrderDetail>> listOrder(OrderDetailQueryBean queryBean) {
         List<OrderDetail> details = null;
@@ -182,6 +188,7 @@ public class OrderController {
         return ResponseBuilder.success(pageBean);
     }
 
+    @ApiOperation("预约信息下载")
     @RequestMapping(value = "/download")
     public String download(OrderDetailQueryBean detail, HttpServletResponse response) {
         List<OrderDetail> result = null;
@@ -250,6 +257,7 @@ public class OrderController {
         }
     }
 
+    @ApiOperation("活动预约信息下载")
     @RequestMapping(value = "/activity/download")
     public String activityDownload(@ModelAttribute OrderDetailQueryBean detail, HttpServletResponse response) {
         List<OrderDetail> result = null;

@@ -40,6 +40,7 @@ public class SwaggerConfigFactoryBean implements FactoryBean<Docket> {
         super();
     }
 
+    @Override
     public Docket getObject() throws Exception {
         return new Docket(DocumentationType.SWAGGER_2)
                 .apiInfo(setApiInfo())
@@ -72,8 +73,8 @@ public class SwaggerConfigFactoryBean implements FactoryBean<Docket> {
         return new ApiInfoBuilder().title("Ad API 说明").description("hehe").version("1.0").build();
     }
 
-    public Class<?> getObjectType() {
-        return null;
+    public Class<Docket> getObjectType() {
+        return Docket.class;
     }
 
     public boolean isSingleton() {
