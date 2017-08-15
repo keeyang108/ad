@@ -48,7 +48,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         logger.info("url:{}", url);
         String token = JwtUtils.getTokenFromRequest(httpServletRequest, this.tokenHeader);
         String uri = httpServletRequest.getRequestURI();
-        if ((!LOGIN_URI.equals(uri) && !ADDORDER_URI.equals(uri) && !SWAGGER_URI.equals(uri))) {
+        if ((!LOGIN_URI.equals(uri) && !ADDORDER_URI.equals(uri) && validateIfSwagger(uri))) {
             if (StringUtils.isBlank(token)){
                 httpServletResponse.getWriter().write(JsonUtils.toJson("请先登陆"));
                 return false;
@@ -74,5 +74,21 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
 
+    }
+
+    private boolean validateIfSwagger(String uri){
+        if (uri.equals(SWAGGER_URI)){
+            return  false;
+        }
+        if (uri.startsWith("/swagger-resources/")){
+            return false;
+        }
+        if (uri.startsWith("/v2/api-docs/")){
+            return false;
+        }
+        if (uri.startsWith("/webjars/springfox-swagger-ui/")){
+            return false;
+        }
+        return true;
     }
 }

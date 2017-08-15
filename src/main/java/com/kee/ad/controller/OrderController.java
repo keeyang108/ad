@@ -189,7 +189,7 @@ public class OrderController {
     }
 
     @ApiOperation("预约信息下载")
-    @RequestMapping(value = "/download")
+    @PostMapping(value = "/download")
     public String download(OrderDetailQueryBean detail, HttpServletResponse response) {
         List<OrderDetail> result = null;
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
@@ -258,8 +258,8 @@ public class OrderController {
     }
 
     @ApiOperation("活动预约信息下载")
-    @RequestMapping(value = "/activity/download")
-    public String activityDownload(@ModelAttribute OrderDetailQueryBean detail, HttpServletResponse response) {
+    @PostMapping(value = "/activity/download")
+    public String activityDownload(OrderDetailQueryBean detail, HttpServletResponse response) {
         List<OrderDetail> result = null;
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         if (detail == null) {

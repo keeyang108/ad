@@ -90,7 +90,7 @@ public class DealerController {
     }
 
     @ApiOperation("转成xml格式")
-    @RequestMapping("/toxml")
+    @GetMapping("/toxml")
     public BaseResult<String> convertToXml() throws IOException {
         dealerService.convertToXml();
         return ResponseBuilder.success("success");
