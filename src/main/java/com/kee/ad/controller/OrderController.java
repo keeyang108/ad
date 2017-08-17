@@ -3,6 +3,7 @@ package com.kee.ad.controller;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.kee.ad.dto.BaseResult;
 import com.kee.ad.model.OrderDetail;
+import com.kee.ad.model.OrderDetailBean;
 import com.kee.ad.model.OrderDetailQueryBean;
 import com.kee.ad.model.ResponseBuilder;
 import com.kee.ad.pojo.PageBean;
@@ -156,10 +157,10 @@ public class OrderController {
 
     @ApiOperation("预订信息列表")
     @PostMapping("/list")
-    public BaseResult<PageBean<OrderDetail>> listOrder(OrderDetailQueryBean queryBean) {
-        List<OrderDetail> details = null;
+    public BaseResult<PageBean<OrderDetailBean>> listOrder(OrderDetailQueryBean queryBean) {
+        List<OrderDetailBean> details = null;
         int totalCount;
-        PageBean<OrderDetail> pageBean = new PageBean<OrderDetail>(queryBean);
+        PageBean<OrderDetailBean> pageBean = new PageBean<>(queryBean);
         try {
             totalCount = orderDetailService.countOrderDetails(queryBean);
             if (totalCount > 0){
@@ -191,7 +192,7 @@ public class OrderController {
     @ApiOperation("预约信息下载")
     @PostMapping(value = "/download")
     public String download(OrderDetailQueryBean detail, HttpServletResponse response) {
-        List<OrderDetail> result = null;
+        List<OrderDetailBean> result = null;
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         if (detail != null && StringUtils.isEmpty(detail.getSubject())) {
             return null;
@@ -205,7 +206,7 @@ public class OrderController {
         logger.info(detail.toString());
         result = orderDetailService.listOrderDetails(detail);
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        for (OrderDetail orderDetail : result) {
+        for (OrderDetailBean orderDetail : result) {
             Map<String, Object> map = new HashMap<String, Object>();
             map.put("name", orderDetail.getName());
             map.put("sex", orderDetail.getSex());
@@ -213,14 +214,15 @@ public class OrderController {
             map.put("province", orderDetail.getProvince());
             map.put("city", orderDetail.getCity());
             map.put("agentName", orderDetail.getAgentname());
+            map.put("connectTel",orderDetail.getConnectTel());
             map.put("carType", orderDetail.getCartype());
             map.put("mediaName", orderDetail.getMedianame());
             map.put("createTime", dateFormat.format(orderDetail.getCreateTime()));
             map.put("mediaUrl", orderDetail.getMediaurl());
             list.add(map);
         }
-        String[] titles = {"用户名", "性别", "电话", "省份", "城市", "经销商", "车型", "渠道", "渠道链接", "预约时间"};
-        String[] keys = {"name", "sex", "mobile", "province", "city", "agentName", "carType", "mediaName", "mediaUrl", "createTime"};
+        String[] titles = {"用户名", "性别", "电话", "省份", "城市", "经销商","经销商电话", "车型", "渠道", "渠道链接", "预约时间"};
+        String[] keys = {"name", "sex", "mobile", "province", "city", "agentName", "connectTel","carType", "mediaName", "mediaUrl", "createTime"};
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         BufferedInputStream bis = null;
         BufferedOutputStream bos = null;
@@ -260,7 +262,7 @@ public class OrderController {
     @ApiOperation("活动预约信息下载")
     @PostMapping(value = "/activity/download")
     public String activityDownload(OrderDetailQueryBean detail, HttpServletResponse response) {
-        List<OrderDetail> result = null;
+        List<OrderDetailBean> result = null;
         List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
         if (detail == null) {
             detail = new OrderDetailQueryBean();

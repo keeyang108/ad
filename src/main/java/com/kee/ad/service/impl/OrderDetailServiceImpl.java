@@ -2,6 +2,7 @@ package com.kee.ad.service.impl;
 
 import com.kee.ad.dao.OrderDetailDao;
 import com.kee.ad.model.OrderDetail;
+import com.kee.ad.model.OrderDetailBean;
 import com.kee.ad.model.OrderDetailQueryBean;
 import com.kee.ad.service.OrderDetailService;
 import org.slf4j.Logger;
@@ -29,7 +30,7 @@ public class OrderDetailServiceImpl implements OrderDetailService {
     }
 
     @Override
-    public List<OrderDetail> listOrderDetails(OrderDetailQueryBean queryBean) {
+    public List<OrderDetailBean> listOrderDetails(OrderDetailQueryBean queryBean) {
         return orderDetailDao.listOrderDetails(queryBean);
     }
 

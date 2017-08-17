@@ -16,6 +16,14 @@ import java.util.List;
  */
 public class SwaggerApiModelPlugin extends PluginAdapter {
 
+    public SwaggerApiModelPlugin() {
+    }
+
+    @Override
+    public void initialized(IntrospectedTable introspectedTable) {
+        super.initialized(introspectedTable);
+    }
+
     public boolean validate(List<String> warnings) {
         return true;
     }

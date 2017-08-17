@@ -1,6 +1,7 @@
 package com.kee.ad.dao;
 
 import com.kee.ad.model.OrderDetail;
+import com.kee.ad.model.OrderDetailBean;
 import com.kee.ad.model.OrderDetailQueryBean;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.dao.DataAccessException;
@@ -19,7 +20,7 @@ public interface OrderDetailDao extends OrderDetailMapper {
      * @param queryBean
      * @return
      */
-    List<OrderDetail> listOrderDetails(OrderDetailQueryBean queryBean) throws DataAccessException;
+    List<OrderDetailBean> listOrderDetails(OrderDetailQueryBean queryBean) throws DataAccessException;
 
     int countOrderDetails(OrderDetailQueryBean queryBean);
 

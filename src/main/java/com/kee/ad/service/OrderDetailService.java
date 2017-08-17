@@ -1,6 +1,7 @@
 package com.kee.ad.service;
 
 import com.kee.ad.model.OrderDetail;
+import com.kee.ad.model.OrderDetailBean;
 import com.kee.ad.model.OrderDetailQueryBean;
 import org.springframework.dao.DataAccessException;
 
@@ -22,7 +23,7 @@ public interface OrderDetailService {
      * @param detail
      * @return
      */
-    List<OrderDetail> listOrderDetails(OrderDetailQueryBean detail) throws DataAccessException;
+    List<OrderDetailBean> listOrderDetails(OrderDetailQueryBean detail) throws DataAccessException;
 
     /**
      * 获取条件查询订单的总数
