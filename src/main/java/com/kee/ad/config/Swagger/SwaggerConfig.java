@@ -26,19 +26,7 @@ public class SwaggerConfig {
 
     @Bean
     public Docket orderDocketBean() throws Exception {
-//        return new Docket(DocumentationType.SWAGGER_2)
-//                .apiInfo(setApiInfo())
-//                .select()
-//                .apis(RequestHandlerSelectors.basePackage("com.kee.add.controller"))
-////                .apis(RequestHandlerSelectors.any())
-//                .paths(PathSelectors.any())
-//                .build();
         SwaggerConfigFactoryBean factoryBean = new SwaggerConfigFactoryBean("order", useSwagger, "com.kee.ad.controller");
         return factoryBean.getObject();
     }
-
-    protected ApiInfo setApiInfo() {
-        return new ApiInfoBuilder().title("Ad API 说明").description("hehe").version("1.0").build();
-    }
-
 }
