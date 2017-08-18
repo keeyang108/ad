@@ -80,13 +80,13 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         if (uri.equals(SWAGGER_URI)){
             return  false;
         }
-        if (uri.startsWith("/swagger-resources/")){
+        if (uri.startsWith("/swagger-resources")){
             return false;
         }
-        if (uri.startsWith("/v2/api-docs/")){
+        if (uri.startsWith("/v2/api-docs")){
             return false;
         }
-        if (uri.startsWith("/webjars/springfox-swagger-ui/")){
+        if (uri.startsWith("/webjars/springfox-swagger-ui")){
             return false;
         }
         return true;
