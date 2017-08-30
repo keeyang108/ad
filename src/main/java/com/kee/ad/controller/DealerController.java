@@ -29,7 +29,7 @@ import java.util.List;
  */
 @Api(value = "经销商管理",description = "经销商管理",tags = {"经销商管理"})
 @RestController
-@RequestMapping("/dealer")
+@RequestMapping("/api/dealer")
 public class DealerController {
 
     @Autowired

@@ -26,7 +26,7 @@ import java.io.IOException;
  */
 @Api(value = "Supervisor", description = "Supervisor", tags = {"Supervisor"})
 @RestController
-@RequestMapping("/supervisor")
+@RequestMapping("/api/supervisor")
 public class SupervisorController {
 
     private final static Logger logger = LoggerFactory.getLogger(SupervisorController.class);

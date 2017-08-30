@@ -33,7 +33,7 @@ import java.util.Map;
  */
 @Api(value = "预约信息管理",description = "预约信息管理",tags = {"预约信息管理"})
 @RestController
-@RequestMapping("/front/order")
+@RequestMapping("/api/order")
 public class OrderController {
 
     private static final Logger logger = LoggerFactory.getLogger(OrderController.class);

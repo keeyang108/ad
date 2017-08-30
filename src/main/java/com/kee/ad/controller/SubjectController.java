@@ -21,7 +21,7 @@ import java.util.List;
  */
 @Api(value = "专题管理",description = "专题管理",tags = {"专题管理"})
 @RestController
-@RequestMapping("/subject")
+@RequestMapping("/api/subject")
 public class SubjectController {
 
     @Autowired
@@ -59,7 +59,7 @@ public class SubjectController {
 
     @ApiOperation("专题列表")
     @PostMapping("/list")
-    public BaseResult<List<Subject>> listSubject(SubjectQueryBean queryBean) {
+    public BaseResult<List<Subject>> listSubject(@RequestBody SubjectQueryBean queryBean) {
         return ResponseBuilder.success(subjectService.listSubject(queryBean));
     }
 
