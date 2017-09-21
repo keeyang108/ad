@@ -49,7 +49,7 @@ public class JwtUtils {
         cookie.setHttpOnly(true);
         cookie.setDomain(req.getServerName());
         cookie.setPath("/");
-        resp.setHeader("token",token);
+        resp.setHeader("Authorization",token);
         resp.addCookie(cookie);
 
     }
