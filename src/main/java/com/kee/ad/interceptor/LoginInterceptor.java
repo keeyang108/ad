@@ -47,6 +47,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
         logger.info("contextPath:{}", contextPath);
         logger.info("url:{}", url);
         String token = JwtUtils.getTokenFromRequest(httpServletRequest, this.tokenHeader);
+        logger.info("token:{}", token);
         String uri = httpServletRequest.getRequestURI();
         if ((!LOGIN_URI.equals(uri) && !ADDORDER_URI.equals(uri) && validateIfSwagger(uri))) {
             if (StringUtils.isBlank(token)){
